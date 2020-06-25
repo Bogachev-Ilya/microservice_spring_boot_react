@@ -1,0 +1,15 @@
+server.port: 8091
+spring:
+  application.name: user-manager
+  datasource:
+    url: jdbc:postgresql://localhost:55382/cndip?useUnicod=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: postgres
+    password: ENC(wR1EBiKOVKeYmH8pp4bBTMQEj5Ncm3rj)
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    hibernate.ddl-auto: none
+  liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
+
+jasypt:
+  encryptor:
+    password: dream
