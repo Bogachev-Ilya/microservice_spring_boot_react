@@ -4,7 +4,9 @@ import com.developer.microusermanager.model.Role;
 import com.developer.microusermanager.model.User;
 import com.developer.microusermanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,22 @@ public class UserController {
     @GetMapping("/service/services")
     public ResponseEntity<?> getServices(){
         return new ResponseEntity<>(discoveryClient.getServices(), HttpStatus.OK);
+    }
+
+    @Autowired
+    private Environment env;
+
+    @Value("${spring.application.name}")
+    private String serviceId;
+
+    @GetMapping("/service/port")
+    public String getServicePort(){
+        return "Service port: " + env.getProperty("local.server.port");
+    }
+
+    @GetMapping("service/instances")
+    public ResponseEntity<?> getInstances(){
+        return new ResponseEntity<>(discoveryClient.getInstances(serviceId), HttpStatus.OK);
     }
 
     @PostMapping("/service/registration")
